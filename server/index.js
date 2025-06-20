@@ -29,7 +29,7 @@ const PORT = process.env.PORT || 4000;
 
 app.use(cors({
     origin: [
-      "https://alumverse-teal.vercel.app"
+      "https://alum-verse.vercel.app"
     ],
     credentials: true
   }));

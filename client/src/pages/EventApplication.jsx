@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useDispatch } from 'react-redux';
+import { fetchUserProfile } from '../features/profileSlice';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -14,6 +16,25 @@ const EventApplication = () => {
         contact: "",
     });
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [contact, setContact] = useState("");
+
+    const getUserProfile = async () => {
+      try {
+        const response = await dispatch(fetchUserProfile());
+        const user = response.payload.user;
+        console.log("user profile: ", user);
+        setFormData({
+          name: user.name || "",
+          email: user.email || "",
+          contact: user.phone || "",
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -40,6 +61,10 @@ const EventApplication = () => {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+        getUserProfile();
+    }, []);
 
 
 

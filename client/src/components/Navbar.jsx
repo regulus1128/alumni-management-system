@@ -22,9 +22,9 @@ const Navbar = () => {
 
 
   return (
-    <div className={`flex justify-around items-center py-5 font-medium border-b-2 ${mode ? 'bg-[#171717] text-white border-gray-800' : 'bg-white border-gray-200'}`}>
+    <div className={`assistant text-xl flex justify-around items-center py-5 font-medium border-b-2 ${mode ? 'bg-[#171717] text-white border-gray-800' : 'bg-white border-gray-200'}`}>
       <NavLink to="/" className="ml-4">
-      <IoMdHome size={30}/>
+      ALUMVERSE
       </NavLink>
 
       {/* Desktop Menu */}

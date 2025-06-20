@@ -25,14 +25,7 @@ const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 4000;
 
-const io = new Server(server, {
-    cors: {
-      origin: 'http://localhost:5173', // Your frontend URL
-      credentials: true
-    }
-});
 
-app.set("io", io); // Set io instance to app for later use in routes/controllers
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -68,40 +61,6 @@ app.get('/', (req, res) => {
     res.send('Hello');
 });
 
-let onlineUsers = new Map();
-
-io.on('connect', (socket) => {
-  console.log('User connected:', socket.id);
-
-  // Save user's socket
-  socket.on('addUser', (userId) => {
-    onlineUsers.set(userId, socket.id);
-    console.log('Online users:', onlineUsers);
-  });
-
-  // Handle sending messages
-  socket.on('sendMessage', ({ senderId, receiverId, text }) => {
-    const receiverSocketId = onlineUsers.get(receiverId);
-    if (receiverSocketId) {
-      io.to(receiverSocketId).emit('getMessage', {
-        senderId,
-        text,
-        createdAt: new Date()
-      });
-    }
-  });
-
-  // Handle disconnect
-  socket.on('disconnect', () => {
-    console.log('User disconnected:', socket.id);
-    for (let [key, value] of onlineUsers.entries()) {
-      if (value === socket.id) {
-        onlineUsers.delete(key);
-        break;
-      }
-    }
-  });
-});
 
 server.listen(PORT, () => {
     console.log(`Server running at PORT ${PORT} ✅`)

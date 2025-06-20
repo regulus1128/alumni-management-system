@@ -16,7 +16,7 @@ const Jobs = () => {
   const dispatch = useDispatch();
   const [apps, fetchApps] = useState([]);
 
-  console.log("user in jobs", user);
+  // console.log("user in jobs", user);
 
   const [fetchedJobs, setFetchedJobs] = useState([]);
 
@@ -83,10 +83,10 @@ const Jobs = () => {
   </div>
 
   {/* Job Container */}
-  <div className="mx-4 my-10 md:m-20">
+  <div className="min-h-screen mx-4 my-10 md:m-20">
     <div className={`relative flex flex-col rounded-sm shadow-sm ${mode ? 'bg-[#1f1f1f] border border-gray-700' : 'bg-white border border-slate-200'}`}>
       <nav className="flex min-w-[240px] flex-col gap-1 p-1.5">
-        {fetchedJobs?.map((job) => (
+        {fetchedJobs.length > 0 ? fetchedJobs?.map((job) => (
           <div
             id={job._id}
             key={job._id}
@@ -185,7 +185,7 @@ const Jobs = () => {
               </div>
             </div>
           </div>
-        ))}
+        )) : <p className="text-center lato-regular text-xl">No jobs found!</p>}
       </nav>
     </div>
   </div>

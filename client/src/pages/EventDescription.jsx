@@ -20,7 +20,7 @@ const EventDescription = () => {
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   const [hasJoined, setHasJoined] = useState(false);
 
-  console.log('current event', currentEvent);
+  // console.log('current event', currentEvent);
 
 
 

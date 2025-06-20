@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { fetchUserProfile } from "../features/profileSlice";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const JobApplication = () => {
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { id } = useParams();
     const [formData, setFormData] = useState({
         name: "",
@@ -15,10 +19,26 @@ const JobApplication = () => {
         reason: "",
         
     });
-
     const [resumeFile, setResumeFile] = useState(null);
 
-    const navigate = useNavigate();
+
+    const getUserProfile = async () => {
+      try {
+        const response = await dispatch(fetchUserProfile());
+        const user = response.payload.user;
+        console.log("user profile: ", user);
+        setFormData({
+          name: user.name || "",
+          email: user.email || "",
+          contact: user.phone || "",
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -58,6 +78,10 @@ const JobApplication = () => {
             toast.error(error?.response?.data?.message || "Failed to submit application");
         }
     }
+
+    useEffect(() => {
+        getUserProfile();
+    }, []);
 
   return (
     <div className="w-full mt-5 flex flex-col items-center lato-regular">

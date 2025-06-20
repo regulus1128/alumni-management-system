@@ -34,7 +34,7 @@ const Alumni = () => {
     try {
       const response = await dispatch(fetchUserProfile());
       const user = response.payload;
-      console.log("user profile: ", user);
+      // console.log("user profile: ", user);
       setRole(user.role);
       fetchSentRequests(user.role, user.user._id);
     } catch (error) {

@@ -41,7 +41,7 @@ const Home = () => {
       <div className="relative w-full h-[80vh]">
         <img src={cs} className="absolute inset-0 w-full h-full object-cover opacity-90" />
         <div className="absolute inset-0 bg-opacity-50 flex flex-col items-center justify-center px-4 text-center lato-regular">
-          <h1 className="text-5xl font-bold mb-4 text-white">Welcome to the Alumni Portal</h1>
+          <h1 className="text-5xl font-bold mb-4 text-white">Welcome to Alumverse!</h1>
           <p className="text-lg mb-6 text-gray-100 max-w-2xl">
             Stay connected with your college community. Discover opportunities, build your network, and never miss an update.
           </p>

@@ -28,7 +28,7 @@ const PORT = process.env.PORT || 4000;
 
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://alumverse-teal.vercel.app",
     credentials: true
 }));
 

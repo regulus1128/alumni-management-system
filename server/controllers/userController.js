@@ -135,7 +135,7 @@ const registerUser = async (req, res) => {
         .cookie("token", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
-          sameSite: "Strict",
+          sameSite: "None",
           maxAge: 7 * 24 * 60 * 60 * 1000,
         })
         .status(201)
@@ -193,7 +193,7 @@ const registerUser = async (req, res) => {
         .cookie("token", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
-          sameSite: "Strict",
+          sameSite: "None",
           maxAge: 7 * 24 * 60 * 60 * 1000,
         })
         .status(201)
@@ -236,7 +236,7 @@ const loginUser = async (req, res) => {
         .cookie("token", token, {
           httpOnly: true,
           maxAge: 24 * 60 * 60 * 1000,
-          sameSite: "Strict",
+          sameSite: "None",
         })
         .status(200)
         .json({
@@ -263,7 +263,7 @@ const loginUser = async (req, res) => {
         .cookie("token", token, {
           httpOnly: true,
           maxAge: 24 * 60 * 60 * 1000,
-          sameSite: "Strict",
+          sameSite: "None",
         })
         .status(200)
         .json({
@@ -290,7 +290,7 @@ const loginUser = async (req, res) => {
         .cookie("token", token, {
           httpOnly: true,
           maxAge: 24 * 60 * 60 * 1000,
-          sameSite: "Strict",
+          sameSite: "None",
         })
         .status(200)
         .json({

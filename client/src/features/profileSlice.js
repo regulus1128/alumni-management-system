@@ -9,7 +9,7 @@ export const fetchUserProfile = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
         const response = await axios.get(`${backendUrl}/api/profile/fetch-profile`, { withCredentials: true});
-        console.log('user from profile slice: ',response);
+        // console.log('user from profile slice: ',response);
         return response.data;
         } catch (error) {
         return rejectWithValue(error.response.data);

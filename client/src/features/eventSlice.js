@@ -8,7 +8,7 @@ export const postAnEvent = createAsyncThunk(
     'event/postAnEvent',
     async (eventData, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${backendUrl}/api/event/post-event`, eventData);
+            const response = await axios.post(`${backendUrl}/api/event/post-event`, eventData,  { withCredentials: true });
             // console.log(response.data);
             return response.data;
         } catch (error) {
@@ -21,7 +21,7 @@ export const getAllEvents = createAsyncThunk(
     'event/getAllEvents',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${backendUrl}/api/event/get-all-events`);
+            const response = await axios.get(`${backendUrl}/api/event/get-all-events`,  { withCredentials: true });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -33,7 +33,7 @@ export const getEventById = createAsyncThunk(
     'event/getEventById',
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${backendUrl}/api/event/get-event/${id}`);
+            const response = await axios.get(`${backendUrl}/api/event/get-event/${id}`,  { withCredentials: true });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -49,7 +49,7 @@ export const getEventsByUser = createAsyncThunk(
       
       // Log the request parameters for debugging
             // console.log(`Fetching events for ${formattedRole} with ID: ${id}`);
-            const response = await axios.get(`${backendUrl}/api/event/user/${role}/${id}`)
+            const response = await axios.get(`${backendUrl}/api/event/user/${role}/${id}`,  { withCredentials: true })
             // console.log("Events response:", response.data);
             return response.data;
         } catch (error) {
@@ -63,7 +63,7 @@ export const deleteEvent = createAsyncThunk(
     'event/deleteEvent',
     async(id, { rejectWithValue }) => {
         try {
-            const response = await axios.delete(`${backendUrl}/api/event/delete-event/${id}`);
+            const response = await axios.delete(`${backendUrl}/api/event/delete-event/${id}`,  { withCredentials: true });
             return { id };
         } catch (error) {
             return rejectWithValue(error.response.data);

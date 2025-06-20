@@ -21,7 +21,7 @@ export const fetchAlumni = createAsyncThunk(
     'alumni/fetchAlumni',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${backendUrl}/api/alumni/alumni`);
+            const response = await axios.get(`${backendUrl}/api/alumni/alumni`,  { withCredentials: true });
             // console.log('alumni from profile slice: ',response);
             return response.data;
         } catch (error) {
@@ -48,7 +48,7 @@ export const updateUserProfile = createAsyncThunk(
               }
 
 
-            const response = await axios.put(`${backendUrl}/api/profile/update-profile`, formData);
+            const response = await axios.put(`${backendUrl}/api/profile/update-profile`, formData,  { withCredentials: true });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);

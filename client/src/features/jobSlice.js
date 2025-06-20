@@ -8,7 +8,7 @@ export const postJob = createAsyncThunk(
     'job/postJob',
     async (jobData, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${backendUrl}/api/job/post-job`, jobData);
+            const response = await axios.post(`${backendUrl}/api/job/post-job`, jobData,  { withCredentials: true });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -20,7 +20,7 @@ export const fetchAllJobs = createAsyncThunk(
     'job/fetchAllJobs',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${backendUrl}/api/job/get-all-jobs`);
+            const response = await axios.get(`${backendUrl}/api/job/get-all-jobs`, { withCredentials: true });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -32,7 +32,7 @@ export const fetchJobById = createAsyncThunk(
     'job/fetchJobById',
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${backendUrl}/api/job/get-job-by-id/${id}`);
+            const response = await axios.get(`${backendUrl}/api/job/get-job-by-id/${id}`, { withCredentials: true });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -46,7 +46,7 @@ export const getJobsByUser = createAsyncThunk(
     'job/getJobsByUser', 
     async ({ id, role }, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${backendUrl}/api/job/job/${role}/${id}`);
+            const response = await axios.get(`${backendUrl}/api/job/job/${role}/${id}`, { withCredentials: true });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -58,7 +58,7 @@ export const deleteJob = createAsyncThunk(
     'event/deleteJob',
     async(id, { rejectWithValue }) => {
         try {
-            const response = await axios.delete(`${backendUrl}/api/job/delete-job/${id}`);
+            const response = await axios.delete(`${backendUrl}/api/job/delete-job/${id}`, { withCredentials: true });
             return { id };
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -70,7 +70,7 @@ export const updateJob = createAsyncThunk(
     'job/updateJob',
     async (updatedJob, { rejectWithValue }) => {
         try {
-            const response = await axios.put(`${backendUrl}/api/job/update-job/${updatedJob.id}`, updatedJob);
+            const response = await axios.put(`${backendUrl}/api/job/update-job/${updatedJob.id}`, updatedJob,  { withCredentials: true });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);

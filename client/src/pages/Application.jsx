@@ -24,7 +24,8 @@ const Application = ({ jobId, onStatusChange }) => {
     try {
       const res = await axios.put(
         `${backendUrl}/api/application/status/${applicationId}`,
-        { status }
+        { status }, 
+        { withCredentials: true }
       );
       console.log(res);
       if (res.data.success) {

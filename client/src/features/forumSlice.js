@@ -14,7 +14,7 @@ export const postAForum = createAsyncThunk(
             if (forumData.image) {
                 formData.append("image", forumData.image);
             }
-            const response = await axios.post(`${backendUrl}/api/forum/post-forum`, formData);
+            const response = await axios.post(`${backendUrl}/api/forum/post-forum`, formData,  { withCredentials: true });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -26,7 +26,7 @@ export const getAllForums = createAsyncThunk(
     'forum/getAllForums',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${backendUrl}/api/forum/get-forums`);
+            const response = await axios.get(`${backendUrl}/api/forum/get-forums`,  { withCredentials: true });
             console.log(response.data);
             return response.data;
         } catch (error) {
@@ -39,7 +39,7 @@ export const getSingleForum = createAsyncThunk(
     'forum/getSingleForum',
     async (forumId, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${backendUrl}/api/forum/get-forum/${forumId}`);
+            const response = await axios.get(`${backendUrl}/api/forum/get-forum/${forumId}`,  { withCredentials: true });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -51,7 +51,7 @@ export const getForumsByUser = createAsyncThunk(
     'forum/getForumsByUser',
     async ({ id, role }, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${backendUrl}/api/forum/forum/${role}/${id}`);
+            const response = await axios.get(`${backendUrl}/api/forum/forum/${role}/${id}`,  { withCredentials: true });
             return response.data;
 
         } catch (error) {
@@ -65,7 +65,7 @@ export const deleteForum = createAsyncThunk(
     'event/deleteForum',
     async(id, { rejectWithValue }) => {
         try {
-            const response = await axios.delete(`${backendUrl}/api/forum/delete-forum/${id}`);
+            const response = await axios.delete(`${backendUrl}/api/forum/delete-forum/${id}`,  { withCredentials: true });
             return { id };
         } catch (error) {
             return rejectWithValue(error.response.data);

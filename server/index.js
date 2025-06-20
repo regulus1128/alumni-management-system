@@ -28,9 +28,11 @@ const PORT = process.env.PORT || 4000;
 
 
 app.use(cors({
-    origin: "https://alumverse-teal.vercel.app",
+    origin: [
+      "https://alumverse-teal.vercel.app"
+    ],
     credentials: true
-}));
+  }));
 
 
 app.use(cookieParser());

@@ -36,7 +36,7 @@ const UpdateJob = () => {
   const getJobById = async (id) => {
     try {
       const response = await dispatch(fetchJobById(id));
-      console.log(response.payload);
+      // console.log(response.payload);
       const job = response.payload.job;
       setFormData(job);
 

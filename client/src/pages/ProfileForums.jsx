@@ -16,7 +16,7 @@ const ProfileForums = () => {
   const fetchselectedForum = async () => {
     try {
       const response = await dispatch(getForumsByUser({ role, id: user._id }));
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -27,7 +27,7 @@ const ProfileForums = () => {
   const deleteAForum = async (id) => {
     try {
       const response = await dispatch(deleteForum(id));
-      console.log(response);
+      // console.log(response);
       toast.success('Forum deleted successfully!');
       fetchselectedForum();
 

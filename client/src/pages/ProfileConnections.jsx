@@ -20,7 +20,7 @@ const ProfileConnections = () => {
   const loadUserProfile = async () => {
     try {
       const response = await dispatch(fetchUserProfile());
-      console.log("response in profile connections: ", response);
+      // console.log("response in profile connections: ", response);
       const userRole = response.payload.role;
       const userId = response.payload.user._id;
       fetchSentConnections(userRole, userId);

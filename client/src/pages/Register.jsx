@@ -60,7 +60,7 @@ const Register = () => {
       formData.append("avatar", avatar);
     }
     const resultAction = await dispatch(registerUser(formData));
-    console.log("Register result:", resultAction);
+    // console.log("Register result:", resultAction);
     toast.success("Registration successful!");
     setEmail(userDetails.email);
     setCodeSent(true);

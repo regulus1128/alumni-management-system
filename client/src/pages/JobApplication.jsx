@@ -26,7 +26,7 @@ const JobApplication = () => {
       try {
         const response = await dispatch(fetchUserProfile());
         const user = response.payload.user;
-        console.log("user profile: ", user);
+        // console.log("user profile: ", user);
         setFormData({
           name: user.name || "",
           email: user.email || "",
@@ -67,7 +67,7 @@ const JobApplication = () => {
 
         try {
             const response = await axios.post(`${backendUrl}/api/job/apply/${id}`, submission, { withCredentials: true });
-            console.log(response);
+            // console.log(response);
             if(response.data.success){
                 toast.success(response.data.message);
                 navigate("/jobs");

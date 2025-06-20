@@ -27,7 +27,7 @@ export const registerUser = createAsyncThunk(
       const response = await axios.post(`${backendUrl}/api/user/register`, userData, {
         withCredentials: true
       });
-      console.log(response.data);
+      // console.log(response.data);
       return response.data.user;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Registration failed");
@@ -42,7 +42,7 @@ export const loginUser = createAsyncThunk(
       const res = await axios.post(`${backendUrl}/api/user/login`, userData, {
         withCredentials: true
       });
-      console.log('response: ', res.data.user);
+      // console.log('response: ', res.data.user);
       return res.data.user;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Login failed");

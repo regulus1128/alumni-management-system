@@ -12,7 +12,7 @@ const StudentList = () => {
       const res = await axios.get(`${backendUrl}/api/admin/students`, {
         withCredentials: true,
       });
-      console.log(res);
+      // console.log(res);
       if (res.data.success) {
         setStudentList(res.data.students);
       }

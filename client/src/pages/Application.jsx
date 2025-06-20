@@ -13,7 +13,7 @@ const Application = ({ jobId, onStatusChange }) => {
   const fetchJob = async () => {
     try {
       const res = await dispatch(fetchJobById(jobId));
-      console.log(res.payload.job.applications);
+      // console.log(res.payload.job.applications);
       setApplications(res.payload.job.applications);
     } catch (error) {
       console.log(error);
@@ -27,7 +27,7 @@ const Application = ({ jobId, onStatusChange }) => {
         { status }, 
         { withCredentials: true }
       );
-      console.log(res);
+      // console.log(res);
       if (res.data.success) {
         setApplications((prev) =>
           prev.filter((application) => application._id !== applicationId)

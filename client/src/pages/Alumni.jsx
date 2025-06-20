@@ -74,8 +74,8 @@ const Alumni = () => {
         }
       );
 
-      console.log("sent req", res);
-      console.log("sent req", res.data.sentAlumniIds);
+      // console.log("sent req", res);
+      // console.log("sent req", res.data.sentAlumniIds);
 
       if (res.data.success && Array.isArray(res.data.sentAlumniIds)) {
         const idSet = new Set(res.data.sentAlumniIds.map((a) => a._id));

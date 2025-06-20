@@ -25,7 +25,7 @@ const EventApplication = () => {
       try {
         const response = await dispatch(fetchUserProfile());
         const user = response.payload.user;
-        console.log("user profile: ", user);
+        // console.log("user profile: ", user);
         setFormData({
           name: user.name || "",
           email: user.email || "",
@@ -48,7 +48,7 @@ const EventApplication = () => {
         e.preventDefault();
         try {
             const res = await axios.post(`${backendUrl}/api/event/join-event/${id}`, formData, { withCredentials: true });
-            console.log(res);
+            // console.log(res);
             if (res.data.success) {
                 toast.success(res.data.message);
                 navigate(`/events`);

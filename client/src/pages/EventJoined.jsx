@@ -15,7 +15,7 @@ const EventJoined = ({ eventId }) => {
     const fetchEvent = async () => {
         try {
             const res = await dispatch(getEventById(eventId));
-            console.log(res.payload.event);
+            // console.log(res.payload.event);
             if(res.payload.success) {
                 setJoinedAlumni(res.payload.event.joinedAlumni);
                 setJoinedStudents(res.payload.event.joinedStudents);

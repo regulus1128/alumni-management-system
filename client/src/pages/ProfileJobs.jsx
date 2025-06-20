@@ -26,7 +26,7 @@ const ProfileJobs = () => {
     setSelectedJobId(null);
   };
 
-  console.log("user", user);
+  // console.log("user", user);
 
   const fetchselectedJobs = async () => {
     try {
@@ -41,7 +41,7 @@ const ProfileJobs = () => {
   const deleteAnjob = async (id) => {
     try {
       const response = await dispatch(deleteJob(id));
-      console.log(response);
+      // console.log(response);
       toast.success("job deleted successfully!");
       fetchselectedJobs();
     } catch (error) {

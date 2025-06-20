@@ -11,7 +11,7 @@ const JobList = () => {
   const fetchJobs = async () => {
     try {
       const res = await axios.get(`${backendUrl}/api/admin/jobs`, { withCredentials: true });
-      console.log(res.data.jobs);
+      // console.log(res.data.jobs);
       if(res.data.success){
         setJobs(res.data.jobs); 
       }

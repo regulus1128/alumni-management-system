@@ -13,7 +13,7 @@ const ForumsList = () => {
   const fetchForums = async () => {
     try {
       const res = await axios.get(`${backendUrl}/api/admin/forums`, { withCredentials: true });
-      console.log(res.data.forums);
+      // console.log(res.data.forums);
       if(res.data.success){
         setForums(res.data.forums); 
       }

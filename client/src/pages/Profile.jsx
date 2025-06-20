@@ -14,7 +14,7 @@ const Profile = () => {
   const loadUserProfile = async () => {
     try {
       const response = await dispatch(fetchUserProfile());
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }

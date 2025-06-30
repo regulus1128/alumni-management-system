@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;
+
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
@@ -10,7 +13,7 @@ const Notifications = () => {
   const fetchAllNotifications = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/notification/notifications`,
+        `${backendUrl}/api/notification/notifications`,
         { withCredentials: true }
       );
       setNotifications(res.data.notifications);
@@ -22,7 +25,7 @@ const Notifications = () => {
   const markAsRead = async (id) => {
     try {
       await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/notification/notifications/${id}`,
+        `${backendUrl}/api/notification/notifications/${id}`,
         {},
         { withCredentials: true }
       );

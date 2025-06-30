@@ -5,7 +5,9 @@ import { FaSuitcase } from "react-icons/fa";
 import { MdForum } from "react-icons/md";
 import { MdEventAvailable } from "react-icons/md";
 import { useSelector } from "react-redux";
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;
 
 const Dashboard = () => {
 

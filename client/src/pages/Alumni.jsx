@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAlumni, fetchUserProfile } from "../features/profileSlice";
 import axios from "axios";
 import toast from "react-hot-toast";
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;
 
 const Alumni = () => {
   const dispatch = useDispatch();

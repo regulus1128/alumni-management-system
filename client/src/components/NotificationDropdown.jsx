@@ -6,8 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { formatDistanceToNow } from 'date-fns';
 
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;
+
 const NotificationDropdown = () => {
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
   const [notifications, setNotifications] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -18,7 +21,7 @@ const NotificationDropdown = () => {
 
   const fetchNotifications = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/notification/notifications`, {
+      const res = await axios.get(`${backendUrl}/api/notification/notifications`, {
         withCredentials: true,
       });
       setNotifications(res.data.notifications);
@@ -29,7 +32,7 @@ const NotificationDropdown = () => {
 
   const markAsRead = async (id) => {
     try {
-      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/notification/notifications/${id}`, {}, {
+      await axios.put(`${backendUrl}/api/notification/notifications/${id}`, {}, {
         withCredentials: true,
       });
       setNotifications((prev) => prev.map((n) => (n._id === id ? { ...n, read: true } : n)));
@@ -69,10 +72,13 @@ const NotificationDropdown = () => {
       )}
     </button>
 
-    {isOpen && (
-      <div
-        className={`absolute right-0 mt-2 w-[300px] z-50 p-2 rounded-md border shadow-lg transition-colors duration-300 
-          ${mode ? "bg-[#1e1e1e] text-white border-gray-700" : "bg-white text-gray-800 border-gray-200"}`}
+    <div className={`fixed inset-0 z-40 ${isOpen ? "block" : "hidden"}`} onClick={() => setIsOpen(false)}></div>
+
+    
+    <div
+        className={`absolute right-0 mt-2 w-[300px] z-50 p-2 rounded-md border shadow-lg transition-all duration-300 origin-top-right transform ${
+          isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"
+        } ${mode ? "bg-[#1e1e1e] text-white border-gray-700" : "bg-white text-gray-800 border-gray-200"}`}
       >
         <h4 className="text-md font-semibold mb-2 px-2">Notifications</h4>
         {notifications.length === 0 ? (
@@ -119,7 +125,7 @@ const NotificationDropdown = () => {
           </button>
         </div>
       </div>
-    )}
+    
   </div>
   );
 };

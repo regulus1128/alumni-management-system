@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import { getEventById } from '../features/eventSlice';
 import { useParams } from 'react-router-dom';
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;
 
 const EventJoined = ({ eventId }) => {
 

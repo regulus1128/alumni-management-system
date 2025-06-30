@@ -31,7 +31,7 @@ const Profile = () => {
 
   return (
     <>
-      <div className={`flex flex-col justify-center items-center `}>
+      <div className={`flex min-h-screen flex-col justify-center items-center `}>
   <div className={`border flex flex-col items-center h-76 rounded-sm w-full transition-colors duration-300 
     ${mode ? "bg-[#1e1e1e] border-gray-700 text-white" : " border-gray-300 text-gray-800"}`}>
     

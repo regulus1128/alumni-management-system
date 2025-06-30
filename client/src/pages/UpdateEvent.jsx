@@ -9,7 +9,8 @@ import { getEventById } from '../features/eventSlice';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;
 
 const UpdateEvent = () => {
 

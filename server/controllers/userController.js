@@ -131,11 +131,13 @@ const registerUser = async (req, res) => {
 
       const token = createToken(newAlumni);
 
+      const isProd = process.env.NODE_ENV === "production";
+
       res
         .cookie("token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "None",
+          secure: isProd,
+          sameSite: isProd ? "None" : "Lax",
           maxAge: 7 * 24 * 60 * 60 * 1000,
         })
         .status(201)
@@ -189,11 +191,14 @@ const registerUser = async (req, res) => {
 
       const token = createToken(newStudent);
 
+      const isProd = process.env.NODE_ENV === "production";
+
+
       res
         .cookie("token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "None",
+          secure: isProd,
+          sameSite: isProd ? "None" : "Lax",
           maxAge: 7 * 24 * 60 * 60 * 1000,
         })
         .status(201)
@@ -232,12 +237,15 @@ const loginUser = async (req, res) => {
         { expiresIn: "7d" }
       );
 
+      const isProd = process.env.NODE_ENV === "production";
+
+
       return res
         .cookie("token", token, {
           httpOnly: true,
           maxAge: 24 * 60 * 60 * 1000,
-          sameSite: "None",
-          secure: process.env.NODE_ENV === "production",
+          sameSite: isProd ? "None" : "Lax",
+          secure: isProd,
         })
         .status(200)
         .json({
@@ -260,12 +268,15 @@ const loginUser = async (req, res) => {
         { expiresIn: "7d" }
       );
 
+      const isProd = process.env.NODE_ENV === "production";
+
+
       return res
         .cookie("token", token, {
           httpOnly: true,
           maxAge: 24 * 60 * 60 * 1000,
-          sameSite: "None",
-          secure: process.env.NODE_ENV === "production",
+          sameSite: isProd ? "None" : "Lax",
+          secure: isProd,
         })
         .status(200)
         .json({
@@ -288,12 +299,14 @@ const loginUser = async (req, res) => {
         { expiresIn: "7d" }
       );
 
+      const isProd = process.env.NODE_ENV === "production";
+
       return res
         .cookie("token", token, {
           httpOnly: true,
           maxAge: 24 * 60 * 60 * 1000,
-          sameSite: "None",
-          secure: process.env.NODE_ENV === "production",
+          sameSite: isProd ? "None" : "Lax",
+          secure: isProd,
         })
         .status(200)
         .json({

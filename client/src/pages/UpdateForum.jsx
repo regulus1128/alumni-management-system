@@ -9,7 +9,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { getSingleForum } from "../features/forumSlice";
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;
 
 const UpdateForum = () => {
   const dispatch = useDispatch();

@@ -7,113 +7,166 @@ import { toggleDarkMode } from "../features/DarkModeSlice";
 import NotificationDropdown from "./NotificationDropdown";
 import { IoIosSunny } from "react-icons/io";
 import { IoMdMoon } from "react-icons/io";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = () => {
   const { mode } = useSelector((state) => state.darkMode);
   const dispatch = useDispatch();
-  
-  
+
   const { user } = useSelector((state) => state.auth);
 
   // console.log('user in navbar: ', user);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-
-
   return (
-    <div className={`assistant text-xl flex justify-around items-center py-5 font-medium border-b-2 ${mode ? 'bg-[#171717] text-white border-gray-800' : 'bg-white border-gray-200'}`}>
-      <NavLink to="/" className="ml-4">
-      ALUMVERSE
+    <div
+      className={`assistant text-xl flex justify-between items-center py-5 px-4 font-medium border-b-2 ${
+        mode
+          ? "bg-[#171717] text-white border-gray-800"
+          : "bg-white border-gray-200"
+      }`}
+    >
+      <NavLink to="/" className="ml-12 hidden md:block">
+        ALUMVERSE
       </NavLink>
 
       {/* Desktop Menu */}
       <div className="hidden md:flex items-center gap-6 text-md assistant text-[18px]">
+        {user && user.role !== "admin" ? (
+          <NavLink to="/alumni" className="relative">
+            <p>Alumni</p>
+            <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
+          </NavLink>
+        ) : (
+          ""
+        )}
 
-      {!!user && user.role !== "admin" ? (<NavLink to="/alumni" className="relative">
-          <p>Alumni</p>
-          <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
-        </NavLink>) : ""}
-        
+        {user && user.role !== "admin" ? (
+          <NavLink to="/jobs" className="relative">
+            <p>Jobs</p>
+            <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
+          </NavLink>
+        ) : (
+          ""
+        )}
 
-        {!!user && user.role !== "admin" ? (<NavLink to="/jobs" className="relative">
-          <p>Jobs</p>
-          <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
-        </NavLink>) : ""}
+        {user && user.role !== "admin" ? (
+          <NavLink to="/forums" className="relative">
+            <p>Forums</p>
+            <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
+          </NavLink>
+        ) : (
+          ""
+        )}
 
-        
+        {user && user.role !== "admin" ? (
+          <NavLink to="/events" className="relative">
+            <p>Events</p>
+            <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
+          </NavLink>
+        ) : (
+          ""
+        )}
 
-        {!!user && user.role !== "admin" ? (<NavLink to="/forums" className="relative">
-          <p>Forums</p>
-          <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
-        </NavLink>) : ""}
+        {user && user.role !== "admin" ? (
+          <NavLink to="/courses" className="relative">
+            <p>Courses</p>
+            <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
+          </NavLink>
+        ) : (
+          ""
+        )}
 
-        
-
-        {!!user && user.role !== "admin" ? (<NavLink to="/events" className="relative">
-          <p>Events</p>
-          <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
-        </NavLink>) : ""}
-        
-
-        {!!user && user.role !== "admin" ? (<NavLink to="/courses" className="relative">
-          <p>Courses</p>
-          <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
-        </NavLink>
-) : ""}
-
-        
-        {!!user && user.role !== "admin" ? (
+        {user && user.role !== "admin" ? (
           <NavLink to="/profile" className="relative">
-          <p>Profile</p>
-          <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
-        </NavLink>
-        ) : ""}
+            <p>Profile</p>
+            <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
+          </NavLink>
+        ) : (
+          ""
+        )}
 
-        {!!user && user.role !== "admin" ? (
+        {user && user.role !== "admin" ? (
           <>
-          <NotificationDropdown/>
-          <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
+            <NotificationDropdown />
+            <hr className="absolute w-full border-none h-1 bg-teal-400 hidden" />
           </>
-        
-        ) : ""}
+        ) : (
+          ""
+        )}
 
-        
-        {!!user && user.role === "admin" ? (<NavLink to="/dashboard" className="relative">
-          <p>Dashboard</p>
-          <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
-        </NavLink>) : ""}
+        {!!user && user.role === "admin" ? (
+          <NavLink to="/dashboard" className="relative">
+            <p>Dashboard</p>
+            <hr className="absolute  w-full border-none h-1 bg-teal-400 hidden" />
+          </NavLink>
+        ) : (
+          ""
+        )}
 
-        <button 
-        onClick={() => dispatch(toggleDarkMode())}
-        className="mr-4 p-2 rounded-full cursor-pointer"
-      >
-        {mode ? <IoIosSunny size={25}/> : <IoMdMoon size={25}/>}
-      </button>
-        
+        <button
+          onClick={() => dispatch(toggleDarkMode())}
+          className="mr-4 p-2 rounded-full cursor-pointer"
+        >
+          {mode ? <IoIosSunny size={25} /> : <IoMdMoon size={25} />}
+        </button>
       </div>
 
       {/* Mobile Menu Button */}
-      <button className="md:hidden mr-4 " onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-
-      {/* Dark Mode Toggle */}
-       
+      {user && user.role !== "admin" && (
+        <div className="md:hidden flex items-center gap-4 ml-auto">
+          <button onClick={() => dispatch(toggleDarkMode())} className="p-2 rounded-full">
+            {mode ? <IoIosSunny size={25} /> : <IoMdMoon size={25} />}
+          </button>
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            <RxHamburgerMenu className="text-2xl" />
+          </button>
+        </div>
+      )}
 
       {/* Mobile Menu */}
-      <div className={`${mobileMenuOpen ? 'block' : 'hidden'} md:hidden absolute top-16 left-0 right-0 bg-white  border-b border-gray-200 z-10`}>
-        <div className="flex flex-col items-center gap-4 py-4 ">
-          <NavLink className="hover:underline" to="/alumni">Alumni</NavLink>
-          <NavLink className="hover:underline" to="/jobs">Jobs</NavLink>
-          <NavLink className="hover:underline" to="/forums">Forums</NavLink>
-          <NavLink className="hover:underline" to="/events">Events</NavLink>
-          <NavLink className="hover:underline" to="/profile">Profile</NavLink>
-          <NavLink className="hover:underline" to="/dashboard">Dashboard</NavLink>
-        </div>
-      </div>
+
+{/* Overlay */}
+<div
+  className={`fixed inset-0 z-40 transition-opacity duration-300 ${
+    mobileMenuOpen ? "inset-0 bg-black opacity-30 z-50 pointer-events-auto" : "opacity-0 pointer-events-none"
+  }`}
+  onClick={() => setMobileMenuOpen(false)}
+></div>
+
+{/* Top Dropdown */}
+<div
+  className={`fixed top-0 left-0 right-0 z-50 shadow-md transition-all duration-300 ease-out transform border-b-2 ${
+    mobileMenuOpen
+      ? "translate-y-0 opacity-100 pointer-events-auto"
+      : "-translate-y-10 opacity-0 pointer-events-none"
+  } ${mode ? "bg-[#171717] text-white border-t border-gray-800" : "bg-white text-gray-800 border-t border-gray-200"}`}
+>
+  <div className="flex flex-col items-center gap-4 py-6">
+    {[
+      { to: "/alumni", label: "Alumni" },
+      { to: "/jobs", label: "Jobs" },
+      { to: "/forums", label: "Forums" },
+      { to: "/events", label: "Events" },
+      { to: "/courses", label: "Courses" },
+      { to: "/profile", label: "Profile" },
+      ...(user?.role === "admin" ? [{ to: "/dashboard", label: "Dashboard" }] : []),
+    ].map(({ to, label }) => (
+      <NavLink
+        key={to}
+        to={to}
+        onClick={() => setMobileMenuOpen(false)}
+        className="hover:underline text-lg transition"
+      >
+        {label}
+      </NavLink>
+    ))}
+  </div>
+</div>
+
+
+
     </div>
   );
 };

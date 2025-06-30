@@ -88,7 +88,7 @@ const EventForm = () => {
 
   return (
     <div
-      className={`w-full min-h-screen flex flex-col items-center lato-regular ${
+      className={`w-full min-h-screen flex flex-col items-center lato-regular transition-colors duration-300 ${
         mode ? "bg-[#121212] text-white" : "bg-white text-gray-800"
       }`}
     >

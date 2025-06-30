@@ -1,7 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { IoMdHome } from "react-icons/io";
 import { BsChatQuoteFill } from "react-icons/bs";
-import { BsChatRightDotsFill } from "react-icons/bs";
 import { BsFillSuitcaseLgFill } from "react-icons/bs";
 import { MdEventAvailable, MdForum } from "react-icons/md";
 import { RiShutDownLine } from "react-icons/ri";
@@ -12,8 +10,9 @@ import { logoutUser } from "../features/authSlice.js";
 import { fetchUserProfile } from "../features/profileSlice.js";
 import { useEffect } from "react";
 import { MdOutlineConnectWithoutContact } from "react-icons/md";
+import { IoMdHome } from "react-icons/io";
 
-function SidebarForProfile() {
+function SidebarForProfile({ closeSidebar }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, role } = useSelector((state) => state.profile);
@@ -35,11 +34,15 @@ function SidebarForProfile() {
 
   const fetchProfile = async () => {
     try {
-      const response = await dispatch(fetchUserProfile());
+      await dispatch(fetchUserProfile());
       // console.log(response);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleClick = () => {
+    if (window.innerWidth < 1024 && closeSidebar) closeSidebar();
   };
 
   useEffect(() => {
@@ -47,7 +50,8 @@ function SidebarForProfile() {
   }, []);
 
   return (
-    <div className={`w-full max-w-[20rem] flex-shrink-0 p-7 shadow-xl shadow-blue-gray-900/5 transition-colors duration-300  
+    
+    <div className={`w-full max-w-[20rem] h-full flex-shrink-0 p-3 transition-colors duration-300  
   ${mode ? "bg-[#121212] text-gray-100 border-r-2 border-gray-800" : "bg-[#f3f3f3] text-gray-700 border-r-2 border-gray-200"}`}>
   <Toaster/>
   <nav className={`flex min-w-[240px] flex-col gap-1 p-4 text-xl font-normal assistant 
@@ -61,12 +65,15 @@ function SidebarForProfile() {
       { to: "/profile/profile-events", icon: <MdEventAvailable size={20} />, label: "Your Events" },
       { to: "/profile/profile-forums", icon: <MdForum size={20} />, label: "Your Forums" },
       { to: "/profile/chats", icon: <BsChatQuoteFill size={20} />, label: "Chats" },
+      { to: "/", icon: <IoMdHome size={20}/>, label: "Home" },
+
     ] : []),
   ].map(({ to, icon, label, end }) => (
     <NavLink
       key={to}
       to={to}
-      end={end} // ✨ only true for /profile
+      end={end} 
+      onClick={handleClick}
       className={({ isActive }) => `
         flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start 
         ${isActive 

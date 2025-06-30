@@ -3,7 +3,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postJob } from "../features/jobSlice";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +20,7 @@ const JobForm = () => {
     content: "", // initial content
   });
   const navigate = useNavigate();
+  const { mode } = useSelector((state) => state.darkMode);
 
   const [formData, setFormData] = useState({
     jobRole: "",
@@ -74,13 +75,25 @@ const JobForm = () => {
   };
 
   const buttonClass = (isActive) =>
-  `px-2 py-1 border rounded ${
-    isActive ? "bg-teal-500 text-white" : "bg-gray-100"
-  }`;
+    `px-2 py-1 text-sm rounded border transition-colors duration-200 ${
+      isActive
+        ? "bg-teal-600 text-white"
+        : mode
+        ? "bg-[#2c2c2c] text-gray-300 border-gray-600 hover:bg-[#3a3a3a]"
+        : "bg-white text-gray-800 border-gray-300 hover:bg-gray-100"
+    }`;
+
+
   return (
-    <div className="w-full mt-5 flex flex-col items-center lato-regular">
-      <h1 className="assistant text-2xl">Enter your job details here</h1>
-      <form onSubmit={handleSubmit} class="w-[30%] mx-auto mt-5">
+    <div className={`w-full min-h-screen flex flex-col items-center lato-regular transition-colors duration-300 ${
+      mode ? "bg-[#121212] text-white" : "bg-white text-gray-800"
+    }`}>
+      <h1 className="assistant text-2xl mt-5">Enter your job details here</h1>
+      <form onSubmit={handleSubmit} className={`w-[90%] md:w-[50%] lg:w-[40%] xl:w-[30%] mx-auto mt-5 p-5 rounded-sm shadow-md hover:shadow-lg transition-shadow ${
+          mode
+            ? "bg-[#1e1e1e] text-white border border-gray-700"
+            : "bg-white text-gray-800 border border-gray-200"
+        }`}>
         <div class="mb-5">
           <input
             type="text"
@@ -88,7 +101,9 @@ const JobForm = () => {
             name="jobRole"
             value={formData.jobRole}
             onChange={handleChange}
-            class="shadow-xs border border-gray-400 text-gray-900 text-md rounded-sm block w-full p-2.5 t"
+            className={`shadow-xs border border-gray-400 text-md rounded-sm block w-full p-2.5 t ${
+              mode ? "text-gray-200 placeholder-gray-500" : "text-gray-600 placeholder-gray-500"
+            }`}
             placeholder="Job Role"
             required
           />
@@ -100,7 +115,9 @@ const JobForm = () => {
             name="company"
             value={formData.company}
             onChange={handleChange}
-            class="shadow-xs border border-gray-400 text-gray-900 text-md rounded-sm block w-full p-2.5 t"
+            className={`shadow-xs border border-gray-400 text-md rounded-sm block w-full p-2.5 t ${
+              mode ? "text-gray-200 placeholder-gray-500" : "text-gray-600 placeholder-gray-500"
+            }`}
             placeholder="Company/Organization"
             required
           />
@@ -112,7 +129,9 @@ const JobForm = () => {
             name="location"
             value={formData.location}
             onChange={handleChange}
-            class="shadow-xs border border-gray-400 text-gray-900 text-md rounded-sm block w-full p-2.5 t"
+            className={`shadow-xs border border-gray-400 text-md rounded-sm block w-full p-2.5 t ${
+              mode ? "text-gray-200 placeholder-gray-500" : "text-gray-600 placeholder-gray-500"
+            }`}
             placeholder="Location"
             required
           />
@@ -144,12 +163,7 @@ const JobForm = () => {
     >
       Link
     </button>
-    <button
-      onClick={() => editor.chain().focus().unsetLink().run()}
-      className="px-2 py-1 border rounded bg-red-100 text-red-600"
-    >
-      Remove Link
-    </button>
+    
   </div>
 )}
             <EditorContent editor={editor} />
@@ -161,7 +175,9 @@ const JobForm = () => {
             value={formData.jobType}
             name="jobType"
             onChange={handleChange}
-            className="shadow-xs border border-gray-400 text-md rounded-sm block w-full p-2.5 t resize-none"
+            className={`shadow-xs border border-gray-400 text-md rounded-sm block w-full p-2.5 t resize-none ${
+              mode ? "text-gray-200 bg-[#1e1e1e]" : "text-gray-600 bg-white"
+            }`}
           >
             <option>Full Time</option>
             <option>Internship</option>
@@ -174,7 +190,9 @@ const JobForm = () => {
             value={formData.salary}
             name="salary"
             onChange={handleChange}
-            class="shadow-xs border border-gray-400 text-gray-900 text-md rounded-sm block w-full p-2.5 t"
+            className={`shadow-xs border border-gray-400 text-md rounded-sm block w-full p-2.5 t ${
+              mode ? "text-gray-200 placeholder-gray-500" : "text-gray-600 placeholder-gray-500"
+            }`}
             placeholder="Salary(per month)"
             required
           />
@@ -184,7 +202,7 @@ const JobForm = () => {
           type="submit"
           class="text-white bg-teal-500 w-full hover:bg-teal-600 font-medium rounded-sm text-lg px-5 py-3 text-center cursor-pointer assistant mb-10"
         >
-          Post Your Job
+          POST YOUR JOB
         </button>
       </form>
     </div>

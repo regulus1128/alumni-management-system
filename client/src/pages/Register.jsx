@@ -4,7 +4,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { logout, registerUser } from "../features/authSlice.js";
 import toast from "react-hot-toast";
 import axios from "axios";
-const backendURL = import.meta.env.VITE_BACKEND_URL;
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;
 
 const Register = () => {
   const dispatch = useDispatch();

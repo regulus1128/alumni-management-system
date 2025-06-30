@@ -5,7 +5,6 @@ import profileReducer from "../features/profileSlice.js";
 import jobReducer from "../features/jobSlice.js";
 import eventSlice from "../features/eventSlice.js";
 import forumSlice from "../features/forumSlice.js";
-import socketSlice from "../features/socketSlice.js";
 import chatSlice from "../features/chatSlice.js";
 
 export const store = configureStore({
@@ -16,7 +15,6 @@ export const store = configureStore({
         job: jobReducer,
         events: eventSlice,
         forums: forumSlice,
-        socket: socketSlice,
         chat: chatSlice,
     }
 });

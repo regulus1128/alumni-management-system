@@ -9,9 +9,9 @@ import { formatPostedDate } from '../utils/date';
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoMdHeart } from "react-icons/io";
 import { IoTrashOutline } from "react-icons/io5";
-{/* <IoMdHeart /> */}
 
-const URL = import.meta.env.VITE_BACKEND_URL;
+const URL = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;
 
 
 

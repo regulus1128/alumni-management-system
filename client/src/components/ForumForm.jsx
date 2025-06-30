@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
@@ -12,6 +12,9 @@ const ForumForm = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { mode } = useSelector((state) => state.darkMode);
+  const [previewImage, setPreviewImage] = useState(null);
+
 
   const editor = useEditor({
     extensions: [
@@ -34,6 +37,9 @@ const ForumForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
+    if(files && files[0]){
+      setPreviewImage(files[0].name);
+    }
     setFormData((prev) => ({
       ...prev,
       [name]: type === "file" ? files[0] : value,
@@ -72,6 +78,7 @@ const ForumForm = () => {
   
       // reset file input manually
       document.getElementById("user_avatar").value = null;
+      setPreviewImage(null);
       navigate("/forums");
     } catch (err) {
       toast.error(err.message || "Failed to post forum.");
@@ -80,23 +87,35 @@ const ForumForm = () => {
   
 
   const buttonClass = (isActive) =>
-    `px-2 py-1 border rounded ${
-      isActive ? "bg-teal-500 text-white" : "bg-gray-100"
+    `px-2 py-1 text-sm rounded border transition-colors duration-200 ${
+      isActive
+        ? "bg-teal-600 text-white"
+        : mode
+        ? "bg-[#2c2c2c] text-gray-300 border-gray-600 hover:bg-[#3a3a3a]"
+        : "bg-white text-gray-800 border-gray-300 hover:bg-gray-100"
     }`;
 
 
   return (
-    <div className="w-full mt-5 flex flex-col items-center lato-regular">
+    <div className={`w-full min-h-screen flex flex-col items-center lato-regular transition-colors duration-300 ${
+      mode ? "bg-[#121212] text-white" : "bg-white text-gray-800"
+    }`}>
       
-      <form onSubmit={handleSubmit} class="w-[30%] mx-auto mt-5">
-        <div class="mb-5">
+      <form onSubmit={handleSubmit} className={`w-[90%] mt-10 md:w-[50%] lg:w-[40%] xl:w-[30%] mx-auto p-5 rounded-sm shadow-md hover:shadow-lg transition-shadow ${
+          mode
+            ? "bg-[#1e1e1e] text-white border border-gray-700"
+            : "bg-white text-gray-800 border border-gray-200"
+        }`}>
+        <div className="mb-5">
           <input
             type="text"
             id="email"
             name="title"
             value={formData.title}
             onChange={handleInputChange}
-            class="shadow-xs border border-gray-400 text-gray-900 text-md rounded-sm block w-full p-2.5 t"
+            className={`shadow-xs border border-gray-400 text-md rounded-sm block w-full p-2.5 t ${
+              mode ? "text-gray-200 placeholder-gray-500" : "text-gray-600 placeholder-gray-500"
+            }`}
             placeholder="Title"
             required
           />
@@ -158,20 +177,35 @@ const ForumForm = () => {
           <EditorContent editor={editor} />
         </div>
         <div class="mb-5 mt-4">
-          <input
-            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 p-2.5"
-            aria-describedby="user_avatar_help"
-            id="user_avatar"
-            name="image"
-            onChange={handleInputChange}
-            type="file"
-          />
+        <label
+    htmlFor="user_avatar"
+    className={`block w-full text-sm rounded-sm cursor-pointer border p-2.5 text-center font-medium transition ${
+      mode
+        ? "bg-[#2c2c2c] text-gray-200 border-gray-600 hover:bg-[#3a3a3a]"
+        : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
+    }`}
+  >
+    Upload Image
+  </label>
+  <input
+    id="user_avatar"
+    name="image"
+    type="file"
+    accept="image/*"
+    onChange={handleInputChange}
+    className="hidden"
+  />
+{previewImage && (
+  <div className="mt-2 text-sm text-center text-teal-500">
+     {previewImage}
+  </div>
+)}
         </div>
         <button
           type="submit"
           class="text-white bg-teal-500 w-full hover:bg-teal-600 font-medium rounded-sm text-lg px-5 py-3 text-center cursor-pointer assistant"
         >
-          Post
+          POST
         </button>
       </form>
     </div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import ResourceUpload from '../components/ResourceUpload';
@@ -7,6 +6,7 @@ import Resources from '../components/Resources';
 import { RxCross1 } from "react-icons/rx";
 
 
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : import.meta.env.VITE_BACKEND_URL;
 
 const Courses = () => {
     const [courses, setCourses] = useState([]);
@@ -70,7 +70,7 @@ const Courses = () => {
                   : "bg-white border-gray-200 text-gray-800"
               }`}
             >
-              <h2 className="text-xl font-semibold mb-2">{course.name}</h2>
+              <h2 className="lg:text-xl md:text-sm font-semibold mb-2">{course.name}</h2>
               <p className="text-sm mb-1">
                 <span className="font-medium">Code:</span> {course.code}
               </p>
@@ -78,13 +78,13 @@ const Courses = () => {
                 <span className="font-medium">Department:</span>{" "}
                 {course.department}
               </p>
-              <div className={`flex justify-around mt-5 ${
+              <div className={`flex flex-col lg:flex-row justify-around gap-3 mt-5 ${
                 mode
                   ? "text-white"
                   : "text-white"
               }`}>
-              <button onClick={() => handleOpenUpload(course._id)} className='bg-blue-500 rounded-sm px-3 py-2 cursor-pointer hover:bg-blue-600'>Upload Resources</button>
-              <button onClick={() => handleOpenResources(course._id)} className='bg-teal-500 rounded-sm px-3 py-2 cursor-pointer hover:bg-teal-600'>Show Resources</button>
+              <button onClick={() => handleOpenUpload(course._id)} className='bg-blue-500 text-center w-full lg:w-1/2 rounded-sm px-3 py-2 cursor-pointer hover:bg-blue-600 transition'>Upload Resources</button>
+              <button onClick={() => handleOpenResources(course._id)} className='bg-teal-500 text-center w-full lg:w-1/2 rounded-sm px-3 py-2 cursor-pointer hover:bg-teal-600 transition'>Show Resources</button>
               </div>
             </div>
           ))}

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
 import axios from 'axios';
 
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;
 const CoursesList = () => {
     const [courses, setCourses] = useState([]);
     const navigate = useNavigate();

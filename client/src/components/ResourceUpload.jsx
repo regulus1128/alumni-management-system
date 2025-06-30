@@ -3,7 +3,8 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;
 
 
 const ResourceUpload = ({ courseId, onClose }) => {

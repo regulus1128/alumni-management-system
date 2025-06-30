@@ -3,7 +3,6 @@ import cs from "../assets/cs.jpg";
 import { NavLink } from "react-router-dom";
 import Events from "../components/Events";
 import { useDispatch, useSelector } from "react-redux";
-import { initializeSocket } from "../features/socketSlice";
 
 const Home = () => {
   const { mode } = useSelector((state) => state.darkMode);

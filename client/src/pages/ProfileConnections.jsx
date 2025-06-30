@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile } from "../features/profileSlice.js";
 import axios from "axios";
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { createOrFetchConversation } from "../features/chatSlice.js";
 
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;
 const ProfileConnections = () => {
   const { user, role, loading, error } = useSelector((state) => state.profile);
   const { mode } = useSelector((state) => state.darkMode);

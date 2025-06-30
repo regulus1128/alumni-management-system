@@ -2,7 +2,6 @@ import express from "express";
 import cors from 'cors';
 import "dotenv/config";
 import http from 'http';
-import { Server } from 'socket.io';
 import cookieParser from 'cookie-parser';
 import userRouter from "./routes/userRoute.js";
 import jobRouter from "./routes/jobRoute.js";
@@ -29,7 +28,8 @@ const PORT = process.env.PORT || 4000;
 
 app.use(cors({
     origin: [
-      "https://alum-verse.vercel.app"
+      "https://alum-verse.vercel.app",
+      "http://localhost:5173"
     ],
     credentials: true
   }));

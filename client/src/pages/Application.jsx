@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchJobById } from "../features/jobSlice";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : 
+import.meta.env.VITE_BACKEND_URL;;
 
 const Application = ({ jobId, onStatusChange }) => {
   const dispatch = useDispatch();

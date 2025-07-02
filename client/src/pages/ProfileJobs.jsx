@@ -60,13 +60,14 @@ const ProfileJobs = () => {
   }, [user]);
 
   return (
-    <>
-  <div className="flex justify-center mb-6 gap-4">
+<>
+  {/* Tabs */}
+  <div className="flex flex-wrap justify-center mb-6 gap-3 sm:gap-4">
     {["applied", "posted"].map((section) => (
       <button
         key={section}
         onClick={() => setActiveSection(section)}
-        className={`px-6 py-2 rounded-sm font-medium lato-regular cursor-pointer ${
+        className={`px-4 sm:px-6 py-2 rounded-sm font-medium lato-regular cursor-pointer text-sm sm:text-base ${
           activeSection === section
             ? "bg-teal-600 text-white"
             : mode
@@ -79,40 +80,44 @@ const ProfileJobs = () => {
     ))}
   </div>
 
-  <div className={`w-full mt-10 rounded-sm transition-colors duration-300 ${mode ? " text-white" : " text-gray-800"}`}>
+  {/* Section Container */}
+  <div className={`w-full mt-10 rounded-sm transition-colors duration-300 ${mode ? "text-white" : "text-gray-800"}`}>
+    {/* Posted Jobs Section */}
     {activeSection === "posted" && (
-      <div className="w-full px-6 pb-6 grid grid-cols-1 gap-4">
-        <h2 className="lato-regular text-2xl">Jobs you have posted</h2>
+      <div className="w-full px-4 sm:px-6 pb-6 grid grid-cols-1 gap-4">
+        <h2 className="lato-regular text-xl sm:text-2xl">Jobs you have posted</h2>
         {selectedJobs?.length > 0 ? (
           selectedJobs.map((job) => (
             <div
               key={job._id}
-              className={`flex flex-col md:flex-row md:justify-between items-start md:items-center rounded-sm p-4 shadow-md transition-all ${
+              className={`flex flex-col gap-4 md:flex-row md:justify-between items-start md:items-center rounded-sm p-4 shadow-md transition-all ${
                 mode ? "bg-[#1e1e1e] hover:bg-[#2a2a2a]" : "bg-white hover:bg-gray-50"
               }`}
             >
-              <div className="mb-4 md:mb-0">
-                <h2 className="lato-regular text-lg">{job?.jobRole}, {job?.company}</h2>
+              <div>
+                <h2 className="lato-regular text-base sm:text-lg">
+                  {job?.jobRole}, {job?.company}
+                </h2>
                 <p className="text-sm opacity-70">{job?.applications.length} applicants</p>
               </div>
 
-              <div className="flex justify-around space-x-4">
+              <div className="flex flex-wrap justify-start md:justify-end gap-3">
                 <button
                   onClick={() => openModal(job._id)}
-                  className="px-4 py-2 bg-teal-500 hover:bg-teal-600 rounded-sm assistant text-white transition"
+                  className="px-4 py-2 bg-teal-500 hover:bg-teal-600 rounded-sm assistant text-white text-sm transition"
                 >
                   Show Applicants
                 </button>
 
                 <NavLink to={`/update-job/${job._id}`}>
-                  <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 rounded-sm assistant text-white transition">
+                  <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 rounded-sm assistant text-white text-sm transition">
                     Edit
                   </button>
                 </NavLink>
 
                 <button
                   onClick={() => deleteAnjob(job._id)}
-                  className="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-sm assistant text-white transition"
+                  className="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-sm assistant text-white text-sm transition"
                 >
                   Delete
                 </button>
@@ -125,28 +130,33 @@ const ProfileJobs = () => {
       </div>
     )}
 
+    {/* Applied Jobs Section */}
     {activeSection === "applied" && (
-      <div className="w-full px-6 pb-6 grid grid-cols-1 gap-4">
-        <h2 className="lato-regular text-2xl">Jobs you have applied</h2>
+      <div className="w-full px-4 sm:px-6 pb-6 grid grid-cols-1 gap-4">
+        <h2 className="lato-regular text-xl sm:text-2xl">Jobs you have applied</h2>
         {appliedJobs?.length > 0 ? (
           appliedJobs.map((app) => (
             <div
               key={app._id}
-              className={`flex flex-col md:flex-row md:justify-between items-start md:items-center rounded-sm p-4 shadow-md transition-all ${
+              className={`flex flex-col gap-4 md:flex-row md:justify-between items-start md:items-center rounded-sm p-4 shadow-md transition-all ${
                 mode ? "bg-[#1e1e1e] hover:bg-[#2a2a2a]" : "bg-white hover:bg-gray-50"
               }`}
             >
-              <div className="mb-4 md:mb-0">
-                <h2 className="lato-regular text-lg">{app?.job?.jobRole}, {app?.job?.company}</h2>
-                <p className="text-sm opacity-70">{app?.job?.location} | {app?.job?.type}</p>
+              <div>
+                <h2 className="lato-regular text-base sm:text-lg">
+                  {app?.job?.jobRole}, {app?.job?.company}
+                </h2>
+                <p className="text-sm opacity-70">
+                  {app?.job?.location} | {app?.job?.type}
+                </p>
               </div>
 
-              <div className="flex space-x-4 lato-regular">
-                <span>
-                  Status:{" "}
-                  <span className={app?.status === "Accepted" ? "text-emerald-500" : "text-red-500"}>
-                    {app?.status}
-                  </span>
+              <div className="text-sm lato-regular">
+                Status:{" "}
+                <span
+                  className={app?.status === "Accepted" ? "text-emerald-500" : "text-red-500"}
+                >
+                  {app?.status}
                 </span>
               </div>
             </div>
@@ -160,10 +170,14 @@ const ProfileJobs = () => {
 
   {/* Modal */}
   {showModal && (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30">
-      <div className={`relative rounded-lg shadow-xl p-6 max-h-[90vh] w-[90%] md:w-[50%] overflow-y-auto ${
-        mode ? "bg-[#1e1e1e] text-white border border-gray-700" : "bg-white text-gray-800 border border-gray-300"
-      }`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30 px-4">
+      <div
+        className={`relative rounded-lg shadow-xl p-6 w-full max-h-[90vh] max-w-2xl overflow-y-auto ${
+          mode
+            ? "bg-[#1e1e1e] text-white border border-gray-700"
+            : "bg-white text-gray-800 border border-gray-300"
+        }`}
+      >
         <div className="flex justify-end">
           <button
             onClick={closeModal}
@@ -177,6 +191,7 @@ const ProfileJobs = () => {
     </div>
   )}
 </>
+
 
   );
 };

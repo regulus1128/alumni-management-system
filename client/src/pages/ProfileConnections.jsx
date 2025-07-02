@@ -133,14 +133,14 @@ const ProfileConnections = () => {
   }, [user?.id]);
 
   return (
-    <div className={`w-full px-4 md:px-10 mt-10 transition-colors duration-300 ${mode ? " text-white" : " text-gray-800"}`}>
+    <div className={`w-full px-4 sm:px-6 md:px-10 mt-10 transition-colors duration-300 ${mode ? "text-white" : "text-gray-800"}`}>
   {/* Section Tabs */}
-  <div className="flex justify-center mb-6 gap-4">
+  <div className="flex flex-wrap justify-center mb-6 gap-3 sm:gap-4">
     {["received", "sent", "accepted"].map((section) => (
       <button
         key={section}
         onClick={() => setActiveSection(section)}
-        className={`px-6 py-2 rounded-sm font-medium lato-regular cursor-pointer ${
+        className={`px-4 sm:px-6 py-2 rounded-sm font-medium lato-regular cursor-pointer text-sm sm:text-base ${
           activeSection === section
             ? "bg-teal-600 text-white"
             : `${mode ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-700"}`
@@ -156,18 +156,27 @@ const ProfileConnections = () => {
   </div>
 
   {/* Section content wrapper */}
-  <div className={`${mode ? "bg-[#1e1e1e]" : "bg-[#f1efef]"} rounded-sm w-full p-6`}>
+  <div className={`${mode ? "bg-[#1e1e1e]" : "bg-[#f1efef]"} rounded-sm w-full p-4 sm:p-6`}>
     {/* Received Connections */}
     {activeSection === "received" && (
       connectionsReceived.length === 0 ? (
         <p className="text-gray-400 text-center lato-regular">No received connections.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {connectionsReceived.map((connection) => {
             const initiator = connection.connectedById || connection.studentId;
             return (
-              <div key={connection._id} className={`${mode ? "bg-[#2a2a2a] text-white" : "bg-white text-gray-800"} p-5 rounded-lg shadow-md hover:shadow-xl transition-all flex flex-col items-center text-center`}>
-                <img src={initiator?.avatar} alt={initiator?.name} className="w-20 h-20 rounded-full object-cover mb-4" />
+              <div
+                key={connection._id}
+                className={`${
+                  mode ? "bg-[#2a2a2a] text-white" : "bg-white text-gray-800"
+                } p-5 rounded-lg shadow-md hover:shadow-xl transition-all flex flex-col items-center text-center`}
+              >
+                <img
+                  src={initiator?.avatar}
+                  alt={initiator?.name}
+                  className="w-20 h-20 rounded-full object-cover mb-4"
+                />
                 <h3 className="text-lg font-semibold lato-regular">{initiator?.name}</h3>
                 {connection.connectedById ? (
                   <>
@@ -177,12 +186,24 @@ const ProfileConnections = () => {
                 ) : (
                   <>
                     <p className="text-sm text-gray-400 lato-regular">{initiator.dept}</p>
-                    <p className="text-sm text-gray-400 lato-regular">{initiator.pursuing} - Batch {initiator.batch}</p>
+                    <p className="text-sm text-gray-400 lato-regular">
+                      {initiator.pursuing} - Batch {initiator.batch}
+                    </p>
                   </>
                 )}
-                <div className="flex w-full justify-around mt-3">
-                  <button onClick={() => respondToConnection(connection._id, "accepted")} className="px-2 py-1 bg-teal-500 hover:bg-teal-600 rounded-sm assistant text-white">Accept</button>
-                  <button onClick={() => respondToConnection(connection._id, "rejected")} className="px-2 py-1 bg-rose-500 hover:bg-rose-600 rounded-sm assistant text-white">Reject</button>
+                <div className="flex w-full justify-between mt-3 px-2 gap-2">
+                  <button
+                    onClick={() => respondToConnection(connection._id, "accepted")}
+                    className="flex-1 px-2 py-1 bg-teal-500 hover:bg-teal-600 rounded-sm assistant text-white text-sm"
+                  >
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => respondToConnection(connection._id, "rejected")}
+                    className="flex-1 px-2 py-1 bg-rose-500 hover:bg-rose-600 rounded-sm assistant text-white text-sm"
+                  >
+                    Reject
+                  </button>
                 </div>
               </div>
             );
@@ -196,14 +217,25 @@ const ProfileConnections = () => {
       connectionsSent.length === 0 ? (
         <p className="text-gray-400 text-center lato-regular">No sent connections.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {connectionsSent.map((connection) => (
-            <div key={connection._id} className={`${mode ? "bg-[#2a2a2a] text-white" : "bg-white text-gray-800"} p-5 rounded-lg shadow-md hover:shadow-xl flex flex-col items-center text-center`}>
-              <img src={connection.alumniId.avatar} alt="name" className="w-20 h-20 rounded-full object-cover mb-4" />
+            <div
+              key={connection._id}
+              className={`${
+                mode ? "bg-[#2a2a2a] text-white" : "bg-white text-gray-800"
+              } p-5 rounded-lg shadow-md hover:shadow-xl flex flex-col items-center text-center`}
+            >
+              <img
+                src={connection.alumniId.avatar}
+                alt="name"
+                className="w-20 h-20 rounded-full object-cover mb-4"
+              />
               <h3 className="text-lg font-semibold lato-regular">{connection.alumniId.name}</h3>
               <p className="text-sm text-gray-400 lato-regular">{connection.alumniId.role}</p>
-              <p className="text-sm text-gray-400 lato-regular">{connection.alumniId.dept} Dept.</p>
-              <span className="mt-3 px-2 py-1 bg-teal-500 text-white rounded-sm assistant">
+              <p className="text-sm text-gray-400 lato-regular">
+                {connection.alumniId.dept} Dept.
+              </p>
+              <span className="mt-3 px-2 py-1 bg-teal-500 text-white rounded-sm assistant text-sm">
                 {connection.status.charAt(0).toUpperCase() + connection.status.slice(1).toLowerCase()}
               </span>
             </div>
@@ -215,16 +247,25 @@ const ProfileConnections = () => {
     {/* Accepted Connections */}
     {activeSection === "accepted" && (
       <>
-        <h2 className="text-2xl font-semibold mb-4 assistant">{acceptedConnections.length} Connections</h2>
+        <h2 className="text-xl sm:text-2xl font-semibold mb-4 assistant">{acceptedConnections.length} Connections</h2>
         {acceptedConnections.length === 0 ? (
           <p className="text-center text-gray-400 lato-regular">No accepted connections yet.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {acceptedConnections.map((connection) => {
               const initiator = connection.connectedById || connection.studentId;
               return (
-                <div key={connection._id} className={`${mode ? "bg-[#2a2a2a] text-white" : "bg-white text-gray-800"} p-5 rounded-lg shadow-md hover:shadow-xl flex flex-col items-center text-center`}>
-                  <img src={initiator?.avatar} alt="name" className="w-20 h-20 rounded-full object-cover mb-4" />
+                <div
+                  key={connection._id}
+                  className={`${
+                    mode ? "bg-[#2a2a2a] text-white" : "bg-white text-gray-800"
+                  } p-5 rounded-lg shadow-md hover:shadow-xl flex flex-col items-center text-center`}
+                >
+                  <img
+                    src={initiator?.avatar}
+                    alt="name"
+                    className="w-20 h-20 rounded-full object-cover mb-4"
+                  />
                   <h3 className="text-lg font-semibold lato-regular">{initiator?.name}</h3>
                   {connection.connectedById ? (
                     <>
@@ -234,11 +275,16 @@ const ProfileConnections = () => {
                   ) : (
                     <>
                       <p className="text-sm text-gray-400 lato-regular">{initiator.dept}</p>
-                      <p className="text-sm text-gray-400 lato-regular">{initiator.pursuing} - Batch {initiator.batch}</p>
+                      <p className="text-sm text-gray-400 lato-regular">
+                        {initiator.pursuing} - Batch {initiator.batch}
+                      </p>
                     </>
                   )}
                   <div className="mt-2">
-                    <button onClick={() => handleStartChat(initiator)} className="px-3 py-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded-sm cursor-pointer">
+                    <button
+                      onClick={() => handleStartChat(initiator)}
+                      className="px-3 py-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded-sm cursor-pointer text-sm"
+                    >
                       Message
                     </button>
                   </div>
@@ -251,6 +297,7 @@ const ProfileConnections = () => {
     )}
   </div>
 </div>
+
 
   );
 };

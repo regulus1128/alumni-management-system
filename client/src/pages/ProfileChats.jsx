@@ -8,6 +8,7 @@ import {
   setSelectedConversation,
 } from "../features/chatSlice";
 import { useSearchParams } from "react-router-dom";
+import { Menu } from "lucide-react";
 
 
 const ProfileChats = () => {
@@ -19,6 +20,7 @@ const ProfileChats = () => {
   const { id } = useParams();
   const [messageInput, setMessageInput] = useState("");
   const { user } = useSelector((state) => state.profile);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const [searchParams] = useSearchParams();
   const receiverId = searchParams.get("receiver");
@@ -73,50 +75,74 @@ const ProfileChats = () => {
   }, [id, conversations]);
 
   return (
-    <div className={`w-full h-[85vh] flex transition-colors duration-300 ${
+    <div className={`w-full h-[85vh] flex flex-col md:flex-row transition-colors duration-300 ${
       mode ? "bg-[#121212] text-white" : "bg-gray-100 text-gray-800"
     } shadow rounded-md overflow-hidden`}>
-    
+
+<div className="flex items-center justify-between md:hidden px-4 py-3 border-b bg-inherit">
+    <span className="text-lg font-semibold">Chats</span>
+    <button
+      onClick={() => setShowSidebar((prev) => !prev)}
+      className="text-xl"
+    >
+      <Menu />
+    </button>
+  </div>
+      
       {/* Sidebar */}
-      <div className={`w-1/4 overflow-y-auto border-r ${
-        mode ? "bg-[#1e1e1e] border-gray-700" : "bg-white border-gray-200"
-      }`}>
-        <div className={`p-4 text-xl font-semibold border-b mt-3 ${
-          mode ? "text-white border-gray-700" : "text-gray-700 border-gray-200"
-        }`}>
-          Conversations
+      <div
+    className={`${
+      showSidebar ? "block" : "hidden"
+    } md:block w-full md:w-1/4 h-[40vh] md:h-auto overflow-y-auto border-r border-b md:border-b-0 ${
+      mode ? "bg-[#1e1e1e] border-gray-700" : "bg-white border-gray-200"
+    }`}
+  >
+    <div
+      className={`p-4 text-lg sm:text-xl font-semibold border-b ${
+        mode ? "text-white border-gray-700" : "text-gray-700 border-gray-200"
+      }`}
+    >
+      Conversations
+    </div>
+    {conversations.map((c) => {
+      const otherMember = c.members.find((m) => m.user._id !== user._id)?.user;
+      return (
+        <div
+          key={c._id}
+          onClick={() => {
+            dispatch(setSelectedConversation(c));
+            dispatch(getMessages(c._id));
+            setShowSidebar(false); // auto-close sidebar on mobile after selecting
+          }}
+          className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition ${
+            selectedConversation?._id === c._id
+              ? mode
+                ? "bg-gray-800"
+                : "bg-gray-100"
+              : ""
+          } hover:${mode ? "bg-gray-800" : "bg-gray-100"}`}
+        >
+          <img
+            src={otherMember.avatar}
+            className="w-10 h-10 rounded-full object-cover"
+          />
+          <span
+            className={`${
+              mode ? "text-white" : "text-gray-800"
+            } font-medium text-sm sm:text-base`}
+          >
+            {otherMember.name}
+          </span>
         </div>
-        {conversations.map((c) => {
-          const otherMember = c.members.find((m) => m.user._id !== user._id)?.user;
-          return (
-            <div
-              key={c._id}
-              onClick={() => {
-                dispatch(setSelectedConversation(c));
-                dispatch(getMessages(c._id));
-              }}
-              className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition ${
-                selectedConversation?._id === c._id
-                  ? mode ? "bg-gray-800" : "bg-gray-100"
-                  : ""
-              } hover:${mode ? "bg-gray-800" : "bg-gray-100"}`}
-            >
-              <img
-                src={otherMember.avatar}
-                className="w-10 h-10 rounded-full"
-              />
-              <span className={`${mode ? "text-white" : "text-gray-800"} font-medium`}>
-                {otherMember.name}
-              </span>
-            </div>
-          );
-        })}
-      </div>
+      );
+    })}
+  </div>
     
       {/* Chat Box */}
-      <div className="w-3/4 flex flex-col justify-between">
+      <div className="w-full md:w-3/4 flex flex-col justify-between h-full">
+        
         {/* Chat Header */}
-        <div className={`px-6 py-4 border-b flex items-center gap-3 ${
+        <div className={`px-4 sm:px-6 py-3 sm:py-4 border-b flex items-center gap-3 ${
           mode ? "bg-[#1e1e1e] border-gray-700" : "bg-white border-gray-200"
         }`}>
           <img
@@ -124,11 +150,11 @@ const ProfileChats = () => {
             alt={selectedUser?.name}
             className="w-10 h-10 rounded-full object-cover"
           />
-          <span className="font-semibold text-lg">{selectedUser?.name}</span>
+          <span className="font-semibold text-base sm:text-lg">{selectedUser?.name}</span>
         </div>
     
         {/* Messages */}
-        <div className={`flex-1 overflow-y-auto px-6 py-4 space-y-4 ${
+        <div className={`flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4 ${
           mode ? "bg-[#181818]" : "bg-[#f8f8f8]"
         }`}>
           {messages.map((msg, idx) => (
@@ -139,7 +165,7 @@ const ProfileChats = () => {
               }`}
             >
               <div
-                className={`px-4 py-2 max-w-[60%] rounded-lg text-sm shadow ${
+                className={`px-4 py-2 max-w-[80%] sm:max-w-[60%] rounded-lg text-sm shadow ${
                   msg.sender?.user?._id === user._id
                     ? "bg-teal-500 text-white rounded-br-none"
                     : mode
@@ -160,7 +186,7 @@ const ProfileChats = () => {
         </div>
     
         {/* Input Box */}
-        <div className={`border-t px-4 py-3 flex items-center gap-2 ${
+        <div className={`border-t px-3 sm:px-4 py-3 flex items-center gap-2 ${
           mode ? "bg-[#1e1e1e] border-gray-700" : "bg-white border-gray-200"
         }`}>
           <input
@@ -183,6 +209,7 @@ const ProfileChats = () => {
         </div>
       </div>
     </div>
+    
     
   );
 };

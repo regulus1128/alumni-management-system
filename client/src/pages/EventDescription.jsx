@@ -13,6 +13,7 @@ import { fetchUserProfile } from '../features/profileSlice';
 
 const EventDescription = () => {
   const dispatch = useDispatch();
+  const { mode } = useSelector((state) => state.darkMode);
   const { selectedEvent, currentEvent, loading } = useSelector((state) => state.events);
   const { user } = useSelector((state) => state.profile);
   const { id } = useParams();
@@ -94,59 +95,60 @@ const EventDescription = () => {
 
 
   return (
-    <div className='flex flex-col items-center w-full mt-5'>
-        <div className="w-1/2 mt-5 flex flex-col lato-regular bg-white shadow-md hover:shadow-lg transition-shadow p-8 rounded-sm">
-      <div class="w-full mx-auto mt-5">
-        <div class="mb-3">
-        <h1 className="assistant text-3xl mb-3">
-            {currentEvent?.name}
+    <div className={`flex flex-col items-center w-full min-h-screen ${mode ? 'bg-[#121212] text-white' : ' text-gray-800'} transition-colors duration-300`}>
+  <div className={`w-[90%] sm:w-4/5 md:w-3/4 lg:w-1/2 mt-5 flex flex-col lato-regular ${mode ? 'bg-neutral-800 text-white' : ' text-gray-800'} duration-300 shadow-md hover:shadow-lg transition-shadow p-4 sm:p-6 md:p-8 rounded-sm`}>
+    <div className="w-full mx-auto mt-5">
+      <div className="mb-3">
+        <h1 className="assistant text-2xl sm:text-3xl mb-3">
+          {currentEvent?.name}
         </h1>
-        </div>
+      </div>
 
-        <div class="mb-2 flex">
-        <CiCalendarDate size={20} className="mt-1"/>
+      <div className="mb-2 flex items-start">
+        <CiCalendarDate size={20} className="mt-1" />
         <p className="lato-regular ml-2 mb-2 mt-0.5">
-        {currentEvent?.dateTime ? formatPostedDate(currentEvent.dateTime) : "Date not available"}
+          {currentEvent?.dateTime ? formatPostedDate(currentEvent.dateTime) : "Date not available"}
         </p>
-        </div>
+      </div>
 
-        <div class="mb-2 flex">
+      <div className="mb-2 flex items-start">
         <IoLocationOutline size={20} className="mt-1" />
         <p className="lato-regular ml-2 mb-2 mt-0.5">
-            {currentEvent?.location}
+          {currentEvent?.location}
         </p>
-        </div>
-
-        <div class="mb-2 flex">
-        <IoIosPerson size={20} className="mt-1" />
-            <p className="lato-regular ml-2 mb-2 mt-0.5"> {currentEvent?.alumni?.name || currentEvent?.student?.name || "Unknown"}</p>
-        </div>
-    
-        <div className="mb-5 mt-5">
-        <h2 className='mb-4 text-xl font-bold'>Event Details:</h2>
-        <div
-                  className="lato-regular mt-2 text-sm md:text-base"
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(currentEvent?.description),
-                  }}
-                />
-
-        </div>
-
-        
-        
-        <button
-          type="submit"
-          onClick={toggleApplicationForm}
-          className={`text-white ${hasJoined ? 'bg-gray-400 cursor-not-allowed' : 'bg-teal-500 hover:bg-teal-600'} w-full font-medium rounded-sm text-lg px-5 py-3 text-center assistant cursor-pointer transition`}
-          disabled={hasJoined}
-        >
-          {hasJoined ? "You have already joined this event." : showApplicationForm ? "Hide Application Form" : "Join This Event"}
-        </button>
       </div>
+
+      <div className="mb-2 flex items-start">
+        <IoIosPerson size={20} className="mt-1" />
+        <p className="lato-regular ml-2 mb-2 mt-0.5">
+          {currentEvent?.alumni?.name || currentEvent?.student?.name || "Unknown"}
+        </p>
+      </div>
+
+      <div className="mb-5 mt-5">
+        <h2 className="mb-4 text-lg sm:text-xl font-bold">Event Details:</h2>
+        <div
+          className="lato-regular mt-2 text-sm md:text-base"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(currentEvent?.description),
+          }}
+        />
+      </div>
+
+      <button
+        type="submit"
+        onClick={toggleApplicationForm}
+        className={`text-white ${hasJoined ? 'bg-gray-400 cursor-not-allowed' : 'bg-teal-500 hover:bg-teal-600'} w-full font-medium rounded-sm text-base sm:text-lg px-5 py-3 text-center assistant cursor-pointer transition`}
+        disabled={hasJoined}
+      >
+        {hasJoined ? "You have already joined this event." : showApplicationForm ? "Hide Application Form" : "Join This Event"}
+      </button>
     </div>
-    {showApplicationForm && <EventApplication />}
-    </div>
+  </div>
+
+  {showApplicationForm && <EventApplication />}
+</div>
+
   )
 }
 

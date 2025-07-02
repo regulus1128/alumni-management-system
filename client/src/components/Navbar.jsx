@@ -87,14 +87,14 @@ const Navbar = () => {
           ""
         )}
 
-        {user && user.role !== "admin" ? (
+        {/* {user && user.role !== "admin" ? (
           <>
             <NotificationDropdown />
             <hr className="absolute w-full border-none h-1 bg-teal-400 hidden" />
           </>
         ) : (
           ""
-        )}
+        )} */}
 
         {!!user && user.role === "admin" ? (
           <NavLink to="/dashboard" className="relative">

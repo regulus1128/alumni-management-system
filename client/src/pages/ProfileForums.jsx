@@ -59,7 +59,7 @@ const ProfileForums = () => {
             </h2>
             <div className="flex gap-4">
               <NavLink to={`/update-forum/${forum._id}`}>
-                <button className="px-3 py-2 bg-teal-500 hover:bg-teal-600 text-white assistant rounded-sm">
+                <button className="px-5 py-2 bg-teal-500 hover:bg-teal-600 text-white assistant rounded-sm">
                   Edit
                 </button>
               </NavLink>

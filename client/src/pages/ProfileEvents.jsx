@@ -64,16 +64,19 @@ const ProfileEvents = () => {
   
 
   return (
-    <div className={`w-full transition-colors duration-300 ${mode ? " text-white" : "text-gray-800"}`}>
-  <div className="flex justify-center mb-6 gap-4">
+    <div className={`w-full transition-colors duration-300 ${mode ? "text-white" : "text-gray-800"}`}>
+  {/* Tabs */}
+  <div className="flex flex-wrap justify-center mb-6 gap-3 sm:gap-4">
     {["joined", "posted"].map((section) => (
       <button
         key={section}
         onClick={() => setActiveSection(section)}
-        className={`px-6 py-2 rounded-sm font-medium lato-regular cursor-pointer ${
+        className={`px-4 sm:px-6 py-2 rounded-sm font-medium lato-regular cursor-pointer text-sm sm:text-base ${
           activeSection === section
             ? "bg-teal-600 text-white"
-            : `${mode ? "bg-[#2a2a2a] text-white" : "bg-gray-200 text-gray-700"}`
+            : mode
+            ? "bg-[#2a2a2a] text-white"
+            : "bg-gray-200 text-gray-700"
         } transition-colors duration-200`}
       >
         {section === "joined" ? "Joined Events" : "Posted Events"}
@@ -83,18 +86,18 @@ const ProfileEvents = () => {
 
   {/* Joined Events */}
   {activeSection === "joined" && (
-    <div className="w-full mt-6 p-6 grid grid-cols-1 gap-4">
-      <h2 className="lato-regular text-2xl">Events you have joined</h2>
+    <div className="w-full mt-6 px-4 sm:px-6 pb-6 grid grid-cols-1 gap-4">
+      <h2 className="lato-regular text-xl sm:text-2xl">Events you have joined</h2>
       {user.joinedEvents?.length > 0 ? (
         user.joinedEvents.map((event) => (
           <div
             key={event._id}
-            className={`rounded-sm p-4 shadow-md transition-all md:flex md:justify-between md:items-center ${
+            className={`rounded-sm p-4 shadow-md transition-all flex flex-col md:flex-row md:justify-between md:items-center gap-2 ${
               mode ? "bg-[#1e1e1e] hover:bg-[#2a2a2a]" : "bg-white hover:bg-gray-50"
             }`}
           >
             <div>
-              <h2 className="lato-regular text-lg">{event.name}</h2>
+              <h2 className="lato-regular text-base sm:text-lg">{event.name}</h2>
               <p className="text-sm">{event.location}</p>
               <p className="text-sm opacity-70">{formatPostedDate(event.dateTime)}</p>
             </div>
@@ -108,39 +111,39 @@ const ProfileEvents = () => {
 
   {/* Posted Events */}
   {activeSection === "posted" && (
-    <div className="w-full mt-6 p-6 grid grid-cols-1 gap-4">
-      <h2 className="lato-regular text-2xl">Events you have posted</h2>
+    <div className="w-full mt-6 px-4 sm:px-6 pb-6 grid grid-cols-1 gap-4">
+      <h2 className="lato-regular text-xl sm:text-2xl">Events you have posted</h2>
       {selectedEvent?.length > 0 ? (
         selectedEvent.map((event) => (
           <div
             key={event._id}
-            className={`rounded-sm p-4 shadow-md transition-all md:flex md:justify-between md:items-center ${
+            className={`rounded-sm p-4 shadow-md transition-all flex flex-col md:flex-row md:justify-between md:items-center gap-4 ${
               mode ? "bg-[#1e1e1e] hover:bg-[#2a2a2a]" : "bg-white hover:bg-gray-50"
             }`}
           >
             <div>
-              <h2 className="lato-regular text-lg">
+              <h2 className="lato-regular text-base sm:text-lg">
                 {event.name}, {event.location}
               </h2>
               <p className="text-sm opacity-70">
                 {(event?.joinedAlumni?.length || 0) + (event?.joinedStudent?.length || 0)} people joined
               </p>
             </div>
-            <div className="flex gap-3 mt-4 md:mt-0">
+            <div className="flex flex-wrap justify-start md:justify-end gap-3">
               <button
                 onClick={() => openModal(event._id)}
-                className="px-4 py-2 bg-teal-500 hover:bg-teal-600 text-white assistant rounded-sm"
+                className="px-4 py-2 bg-teal-500 hover:bg-teal-600 text-white assistant rounded-sm text-sm"
               >
                 Show Joined Members
               </button>
               <NavLink to={`/update-event/${event._id}`}>
-                <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white assistant rounded-sm">
+                <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white assistant rounded-sm text-sm">
                   Edit
                 </button>
               </NavLink>
               <button
                 onClick={() => deleteAnEvent(event._id)}
-                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white assistant rounded-sm"
+                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white assistant rounded-sm text-sm"
               >
                 Delete
               </button>
@@ -155,10 +158,14 @@ const ProfileEvents = () => {
 
   {/* Modal */}
   {showModal && (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30">
-      <div className={`relative rounded-lg shadow-xl p-6 max-h-[90vh] w-[90%] md:w-[50%] overflow-y-auto ${
-        mode ? "bg-[#1e1e1e] text-white border border-gray-700" : "bg-white text-gray-800 border border-gray-300"
-      }`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30 px-4">
+      <div
+        className={`relative rounded-lg shadow-xl p-6 w-full max-h-[90vh] max-w-2xl overflow-y-auto ${
+          mode
+            ? "bg-[#1e1e1e] text-white border border-gray-700"
+            : "bg-white text-gray-800 border border-gray-300"
+        }`}
+      >
         <div className="flex justify-end">
           <button
             onClick={closeModal}
@@ -172,6 +179,7 @@ const ProfileEvents = () => {
     </div>
   )}
 </div>
+
 
   );
 };

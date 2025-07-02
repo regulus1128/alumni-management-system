@@ -19,7 +19,7 @@ import EventForm from './components/EventForm'
 import UpdateEvent from './pages/UpdateEvent'
 import ForumDescription from './pages/ForumDescription'
 import ProfileLayout from './layouts/ProfileLayout'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { checkAuthStatus } from './features/authSlice.js'
 import UpdateJob from './pages/UpdateJob.jsx'
 import UpdateForum from './pages/UpdateForum.jsx'
@@ -33,6 +33,9 @@ import Courses from './pages/Courses.jsx'
 const App = () => {
 
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  // console.log(user);
 
   // Check the authentication status when the app loads
   useEffect(() => {
@@ -43,7 +46,8 @@ const App = () => {
   return (
     <div>
       <BrowserRouter>
-      <Navbar/>
+      {user && <Navbar/>}
+      
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/alumni' element={<Alumni/>}/>

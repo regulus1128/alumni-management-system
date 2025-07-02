@@ -70,7 +70,7 @@ const Jobs = () => {
   };
 
   return (
-    <div className={`min-h-screen ${mode ? 'bg-[#121212] text-white' : 'bg-white text-gray-800'} transition-colors duration-300`}>
+    <div className={`h-full mb-10 ${mode ? 'bg-[#121212] text-white' : 'bg-white text-gray-800'} transition-colors duration-300`}>
   {/* Post Job Button */}
   <div className="flex justify-center">
     {role === "alumni" && (
@@ -83,7 +83,7 @@ const Jobs = () => {
   </div>
 
   {/* Job Container */}
-  <div className="min-h-screen mx-4 my-10 md:m-20">
+  <div className="min-h-screen mb-10 mx-4 my-10 md:m-20">
     <div className={`relative flex flex-col rounded-sm shadow-sm ${mode ? 'bg-[#1f1f1f] border border-gray-700' : 'bg-white border border-slate-200'}`}>
       <nav className="flex min-w-[240px] flex-col gap-1 p-1.5">
         {fetchedJobs.length > 0 ? fetchedJobs?.map((job) => (

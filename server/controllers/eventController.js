@@ -49,7 +49,7 @@ const postEvent = async (req, res) => {
 
   const getAllEvents = async (req, res) => {
     try {
-      const events = await Event.find().populate('alumni', 'name').populate('student', 'name');
+      const events = await Event.find().populate('alumni', 'name').populate('student', 'name').sort({ createdAt: -1 });
   
       res.status(200).json({ success: true, events });
     } catch (error) {

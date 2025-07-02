@@ -43,52 +43,68 @@ const Login = () => {
   return (
     <form
   onSubmit={handleSubmit}
-  className={`flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 transition-colors duration-300 ${
-    mode ? "text-white" : "text-gray-800"
-  }`}
+  className="flex flex-col items-center justify-center min-h-screen w-[90%] sm:max-w-md m-auto gap-4 transition-colors duration-300"
 >
-  <div className={`w-full ${mode ? "bg-[#1e1e1e]" : "bg-white"} p-6 rounded-md`}>
-    <p className="text-3xl mb-4 assistant">Login</p>
+<div className="w-full p-8 rounded-2xl bg-white shadow-2xl border border-gray-100 backdrop-blur-sm">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 assistant mb-2">Welcome Back!</h1>
+          <p className="text-gray-600 lato-regular">Sign in to your account</p>
+        </div>
 
-    <input
-      type="email"
-      name="email"
-      onChange={handleChange}
-      value={userDetails.email}
-      className={`w-full px-3 py-2 border rounded-sm lato-regular mt-2 ${
-        mode ? "bg-[#2a2a2a] border-gray-600 text-white" : "border-neutral-500"
-      }`}
-      placeholder="Email"
-      required
-    />
+        <div className="space-y-6">
+          <div className="relative">
+            <input
+              type="email"
+              name="email"
+              onChange={handleChange}
+              value={userDetails.email}
+              className="w-full px-3 py-2 border-2 border-gray-200 rounded-full lato-regular transition-all duration-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 focus:outline-none placeholder-gray-400 bg-gray-50 focus:bg-white"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
 
-    <input
-      type="password"
-      name="password"
-      onChange={handleChange}
-      value={userDetails.password}
-      className={`w-full px-3 py-2 border rounded-sm lato-regular mt-2 ${
-        mode ? "bg-[#2a2a2a] border-gray-600 text-white" : "border-neutral-500"
-      }`}
-      placeholder="Password"
-      required
-    />
+          <div className="relative">
+            <input
+              type="password"
+              name="password"
+              onChange={handleChange}
+              value={userDetails.password}
+              className="w-full px-3 py-2 border-2 border-gray-200 rounded-full lato-regular transition-all duration-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 focus:outline-none placeholder-gray-400 bg-gray-50 focus:bg-white"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
 
-    <button
-      className="bg-teal-500 text-white font-medium px-8 w-full py-2 mt-4 rounded-sm cursor-pointer hover:bg-teal-600 assistant"
-      disabled={loading}
-    >
-      {loading ? "Logging in..." : "Click here to log in"}
-    </button>
+          <button
+            className="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white font-semibold px-8 py-3 rounded-full cursor-pointer hover:from-teal-600 hover:to-teal-700 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none assistant"
+            disabled={loading}
+          >
+            {loading ? (
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Signing in...
+              </div>
+            ) : (
+              "Sign In"
+            )}
+          </button>
 
-    {error && <p className="text-red-500 mt-2">{error}</p>}
+          {error && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-full">
+              <p className="text-red-600 text-sm font-medium">{error}</p>
+            </div>
+          )}
+        </div>
 
-    <NavLink to="/register">
-      <p className="cursor-pointer lato-regular text-[17px] hover:text-teal-500 mt-3 assistant">
-        New here? Click here to sign up.
-      </p>
-    </NavLink>
-  </div>
+        <div className="mt-8 text-center">
+          <NavLink to="/register">
+            <p className="cursor-pointer lato-regular text-gray-600 transition-colors duration-200 assistant">
+              New here? <span className="font-semibold transition-colors duration-200 text-teal-600 hover:text-teal-700">Create an account.</span>
+            </p>
+          </NavLink>
+        </div>
+      </div>
 
   <Toaster position="top-center" />
 </form>

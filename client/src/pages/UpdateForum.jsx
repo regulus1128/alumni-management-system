@@ -3,7 +3,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -16,6 +16,9 @@ const UpdateForum = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
+  const { mode } = useSelector((state) => state.darkMode);
+  
+
 
   const editor = useEditor({
     extensions: [
@@ -104,20 +107,30 @@ const UpdateForum = () => {
   };
 
   const buttonClass = (isActive) =>
-    `px-2 py-1 border rounded ${
-      isActive ? "bg-teal-500 text-white" : "bg-gray-100"
+    `px-2 py-1 text-sm rounded border transition-colors duration-200 ${
+      isActive
+        ? "bg-teal-600 text-white"
+        : mode
+        ? "bg-[#2c2c2c] text-gray-300 border-gray-600 hover:bg-[#3a3a3a]"
+        : "bg-white text-gray-800 border-gray-300 hover:bg-gray-100"
     }`;
 
   return (
-    <div className="w-full mt-5 flex flex-col items-center lato-regular">
-      <form onSubmit={handleSubmit} className="w-[30%] mx-auto mt-5">
+    <div className={`w-full min-h-screen flex flex-col items-center lato-regular transition-colors duration-300 ${
+      mode ? "bg-[#121212] text-white" : "bg-white text-gray-800"
+    }`}>
+      <form onSubmit={handleSubmit} className={`w-full max-w-[90%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[40%] mx-auto mt-5 shadow-md hover:shadow-lg transition-shadow ${
+          mode
+            ? "bg-[#1e1e1e] text-white border border-gray-700"
+            : "bg-white text-gray-800 border border-gray-200"
+        } p-5 rounded-sm`}>
         <div className="mb-5">
           <input
             type="text"
             name="title"
             value={formData.title}
             onChange={handleInputChange}
-            className="shadow-xs border border-gray-400 text-gray-900 text-md rounded-sm block w-full p-2.5"
+            className={`shadow-xs border border-gray-400  text-md rounded-sm block w-full p-2.5`}
             placeholder="Title"
             required
           />

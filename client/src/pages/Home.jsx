@@ -71,7 +71,7 @@ const Home = () => {
                   </button>
                 </NavLink>
                 <NavLink to="/register">
-                  <button className="bg-teal-700 border-2 border-white/30 px-8 py-4 rounded-xl text-white text-lg font-semibold hover:bg-teal-800 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-w-[140px]">
+                  <button className="bg-teal-700 px-8 py-4 rounded-xl text-white text-lg font-semibold hover:bg-teal-800 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-w-[140px]">
                     REGISTER
                   </button>
                 </NavLink>
